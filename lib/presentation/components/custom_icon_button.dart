@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:game/extensions/sizer_extensions.dart';
 
 class CustomIconButton extends StatelessWidget {
+  const CustomIconButton(
+    this.icon, {
+    required this.onPressed,
+    super.key,
+    this.iconSize,
+    this.color,
+  });
   final IconData icon;
   final VoidCallback onPressed;
   final double? iconSize;
   final Color? color;
-
-  const CustomIconButton(
-    this.icon, {
-    super.key,
-    required this.onPressed,
-    this.iconSize,
-    this.color,
-  });
 
   @override
   Widget build(BuildContext context) {

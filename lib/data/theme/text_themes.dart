@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:game/data/theme/app_colors.dart';
 import 'package:game/extensions/sizer_extensions.dart';
 
-import 'app_colors.dart';
-
 class CustomTextTheme extends TextTheme {
-  final BuildContext context;
-
   const CustomTextTheme(this.context);
+  final BuildContext context;
 
   TextStyle get titleS =>
       CupertinoTheme.of(context).textTheme.textStyle.copyWith(

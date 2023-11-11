@@ -8,6 +8,10 @@ enum GridStatus {
   empty(color: AppColors.gridEmptyColor),
   inactive(color: AppColors.gridInactiveColor);
 
+  const GridStatus({
+    required this.color,
+  });
+
   GridStatus compare(GridStatus secondStatus) {
     if (this == GridStatus.valid && secondStatus == GridStatus.valid) {
       return GridStatus.valid;
@@ -17,15 +21,11 @@ enum GridStatus {
     } else if ((this == GridStatus.empty || secondStatus == GridStatus.empty) &&
         this != secondStatus) {
       return GridStatus.pending;
-    } else if ((this == GridStatus.empty || secondStatus == GridStatus.empty)) {
+    } else if (this == GridStatus.empty || secondStatus == GridStatus.empty) {
       return GridStatus.empty;
     }
     return GridStatus.inactive;
   }
-
-  const GridStatus({
-    required this.color,
-  });
 
   final Color color;
 }

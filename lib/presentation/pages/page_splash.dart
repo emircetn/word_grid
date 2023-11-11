@@ -14,7 +14,7 @@ class PageSplash extends StatefulWidget {
 }
 
 class _PageSplashState extends State<PageSplash> {
-  final wordServiceInitializeCompleter = Completer();
+  final wordServiceInitializeCompleter = Completer<void>();
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _PageSplashState extends State<PageSplash> {
     AppRouter.router.navigateTo(context, PageGame.path, clearStack: true);
   }
 
-  void initWordService() async {
+  Future<void> initWordService() async {
     final result = await WordService.instance.init();
     if (result) {
       wordServiceInitializeCompleter.complete();

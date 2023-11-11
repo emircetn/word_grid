@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:game/data/models/drag_payload.dart';
 import 'package:game/data/theme/app_colors.dart';
 import 'package:game/extensions/sizer_extensions.dart';
-import 'package:game/data/models/drag_payload.dart';
 
 class LetterDrag extends StatelessWidget {
+  LetterDrag({
+    required this.onKeyPressed,
+    required this.onBackSpacePressed,
+    super.key,
+    this.padding = EdgeInsets.zero,
+  });
   final ValueChanged<String> onKeyPressed;
   final VoidCallback onBackSpacePressed;
   final EdgeInsets padding;
@@ -14,13 +20,6 @@ class LetterDrag extends StatelessWidget {
     ['D', 'F', 'G', 'H', 'J', 'K', 'Ş'],
     ['R', 'T', 'Y', 'U', 'P', 'Z', 'L'],
   ];
-
-  LetterDrag({
-    super.key,
-    required this.onKeyPressed,
-    required this.onBackSpacePressed,
-    this.padding = EdgeInsets.zero,
-  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class LetterDrag extends StatelessWidget {
                           ),
                         );
                       },
-                    ).toList(),
+                    ),
                     if (keyboardRows.indexOf(row) == keyboardRows.length - 1)
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 4.sp),
@@ -62,7 +61,7 @@ class LetterDrag extends StatelessWidget {
                             ),
                           ),
                         ),
-                      )
+                      ),
                   ],
                 ),
               ),
@@ -75,10 +74,9 @@ class LetterDrag extends StatelessWidget {
 }
 
 class KeyButton extends StatelessWidget {
+  const KeyButton({required this.letter, required this.onPressed, super.key});
   final String letter;
-  final Function(String) onPressed;
-
-  const KeyButton({super.key, required this.letter, required this.onPressed});
+  final ValueChanged<String> onPressed;
 
   @override
   Widget build(BuildContext context) {

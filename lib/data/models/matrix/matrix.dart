@@ -2,9 +2,6 @@ import 'package:game/data/models/matrix/matrix_position.dart';
 import 'package:game/data/models/matrix/matrix_size.dart';
 
 class Matrix<T> {
-  final List<List<T>> _data;
-  final MatrixSize size;
-
   Matrix({
     required this.size,
     required T Function(int) generator,
@@ -20,6 +17,8 @@ class Matrix<T> {
         );
 
   Matrix._internal(this.size, this._data);
+  final List<List<T>> _data;
+  final MatrixSize size;
 
   T getValue(int x, int y) {
     return _data[x][y];
@@ -42,8 +41,8 @@ class Matrix<T> {
   }
 
   Matrix<T> rotate() {
-    int rows = _data.length;
-    int cols = _data[0].length;
+    final rows = _data.length;
+    final cols = _data[0].length;
 
     final rotatedData =
         List.generate(cols, (i) => List<T>.generate(rows, (j) => _data[j][i]));
@@ -52,7 +51,7 @@ class Matrix<T> {
   }
 
   Matrix<T> copy() {
-    final copiedData = _data.map((row) => List<T>.from(row)).toList();
+    final copiedData = _data.map(List<T>.from).toList();
     return Matrix<T>._internal(size, copiedData);
   }
 

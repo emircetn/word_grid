@@ -1,20 +1,19 @@
 import 'package:game/constants/grid_constants.dart';
-import 'package:game/enums/enums.dart';
-import 'package:game/extensions/string_extensions.dart';
 import 'package:game/data/models/grid.dart';
 import 'package:game/data/models/matrix/matrix.dart';
 import 'package:game/data/models/matrix/matrix_size.dart';
+import 'package:game/enums/enums.dart';
+import 'package:game/extensions/string_extensions.dart';
 
 typedef WordCheckCallback = bool Function(String);
 
 class MatrixService {
+  MatrixService._init();
   static MatrixService? _instance;
   static MatrixService get instance {
     _instance ??= MatrixService._init();
     return _instance!;
   }
-
-  MatrixService._init();
 
   Matrix<Grid> updateGridStatusList({
     required MatrixSize size,
@@ -34,13 +33,14 @@ class MatrixService {
       checkTheWordCallback: checkTheWordCallback,
     );
 
-    //horizontal tamamlandı. vertical ile karşılaştırlması için tekrar horizontal ile aynı eksenine çevir
+    //horizontal tamamlandı. vertical ile karşılaştırlması için tekrar
+    //horizontal ile aynı eksenine çevir
     final yNewGridMatrix = rotatedNewGridMatrix.rotate();
 
     final updatedGridMatrix = gridMatrix.copy();
 
-    for (int xAxisIndex = 0; xAxisIndex < size.xAxisSize; xAxisIndex++) {
-      for (int yAxisIndex = 0; yAxisIndex < size.yAxisSize; yAxisIndex++) {
+    for (var xAxisIndex = 0; xAxisIndex < size.xAxisSize; xAxisIndex++) {
+      for (var yAxisIndex = 0; yAxisIndex < size.yAxisSize; yAxisIndex++) {
         final verticalGrid = xNewGridMatrix.getValue(xAxisIndex, yAxisIndex);
         final horizontalGrid = yNewGridMatrix.getValue(xAxisIndex, yAxisIndex);
 
@@ -74,12 +74,12 @@ class MatrixService {
       }
     }
 
-    Map letterMap = {};
-    for (int rowIndex = 0; rowIndex < matrix.getRows().length; rowIndex++) {
+    final letterMap = <int, String>{};
+    for (var rowIndex = 0; rowIndex < matrix.getRows().length; rowIndex++) {
       letterMap.clear();
 
       final matrixRow = matrix.getRowAtIndex(rowIndex);
-      for (int axisIndex = 0; axisIndex < matrixRow.length; axisIndex++) {
+      for (var axisIndex = 0; axisIndex < matrixRow.length; axisIndex++) {
         final grid = matrixRow[axisIndex];
 
         final isLastIndex = axisIndex == matrixRow.length - 1;

@@ -1,19 +1,18 @@
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game/blocs/game/game_bloc.dart';
 import 'package:game/configs/game_config.dart';
+import 'package:game/data/models/grid_options.dart';
 import 'package:game/data/theme/app_colors.dart';
 import 'package:game/extensions/context_extensions.dart';
 import 'package:game/extensions/sizer_extensions.dart';
-import 'package:game/data/models/grid_options.dart';
 import 'package:game/presentation/components/blur.dart';
 import 'package:game/presentation/components/custom_icon_button.dart';
-import 'package:delayed_display/delayed_display.dart';
 
 class PageSettings extends StatefulWidget {
-  static const String path = "/settings";
-
   const PageSettings({super.key});
+  static const String path = '/settings';
 
   @override
   State<PageSettings> createState() => _PageSettingsState();
@@ -28,31 +27,30 @@ class _PageSettingsState extends State<PageSettings> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: buildAppBar(),
-        body: Container(
+        body: ColoredBox(
           color: AppColors.backgroundColor.withOpacity(0.7),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.sp),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 16.sp),
-                buildHeader(title: "GAME"),
+                buildHeader(title: 'GAME'),
                 SizedBox(height: 8.sp),
                 buildGameOption(
-                  title: "MAIN AXIS COUNT",
+                  title: 'MAIN AXIS COUNT',
                   count: gridOptions.xAxisSize,
                   onIncrease: () => GameConfig.gridOptions.xAxisSize++,
                   onDecrease: () => GameConfig.gridOptions.xAxisSize--,
                 ),
                 buildGameOption(
-                  title: "CROSS AXIS COUNT",
+                  title: 'CROSS AXIS COUNT',
                   count: gridOptions.yAxisSize,
                   onIncrease: () => GameConfig.gridOptions.yAxisSize++,
                   onDecrease: () => GameConfig.gridOptions.yAxisSize--,
                 ),
                 buildGameOption(
-                  title: "INACTIVE INDEX COUNT",
+                  title: 'INACTIVE INDEX COUNT',
                   count: gridOptions.inactiveItemCount,
                   onIncrease: () => GameConfig.gridOptions.inactiveItemCount++,
                   onDecrease: () => GameConfig.gridOptions.inactiveItemCount--,
@@ -69,7 +67,7 @@ class _PageSettingsState extends State<PageSettings> {
   AppBar buildAppBar() {
     return AppBar(
       title: Text(
-        "SETTINGS",
+        'SETTINGS',
         style: context.textTheme.titleM.copyWith(color: Colors.white),
       ),
     );
@@ -122,7 +120,7 @@ class _PageSettingsState extends State<PageSettings> {
                 onPressed: decreaseTapped,
               ),
               Text(
-                "$count",
+                '$count',
                 style: context.textTheme.titleM,
               ),
               CustomIconButton(

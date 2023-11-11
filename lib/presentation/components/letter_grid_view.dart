@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:game/constants/grid_constants.dart';
-import 'package:game/enums/enums.dart';
-import 'package:game/extensions/context_extensions.dart';
-import 'package:game/extensions/sizer_extensions.dart';
 import 'package:game/data/models/drag_payload.dart';
 import 'package:game/data/models/grid.dart';
 import 'package:game/data/models/matrix/matrix.dart';
+import 'package:game/enums/enums.dart';
+import 'package:game/extensions/context_extensions.dart';
+import 'package:game/extensions/sizer_extensions.dart';
 
 class LetterGridView extends StatelessWidget {
+  const LetterGridView({
+    required this.gridMatrix,
+    required this.itemTapped,
+    required this.onKeyDragged,
+    required this.selectedIndex,
+    required this.crossAxisCount,
+    required this.mainAxisCount,
+    super.key,
+    this.padding,
+  });
   final Matrix<Grid> gridMatrix;
   final ValueChanged<int> itemTapped;
   final ValueChanged<DragPayload> onKeyDragged;
@@ -16,25 +26,14 @@ class LetterGridView extends StatelessWidget {
   final int crossAxisCount;
   final EdgeInsets? padding;
 
-  const LetterGridView({
-    super.key,
-    required this.gridMatrix,
-    required this.itemTapped,
-    required this.onKeyDragged,
-    required this.selectedIndex,
-    required this.crossAxisCount,
-    required this.mainAxisCount,
-    this.padding,
-  });
-
-  bool onWillAccept(bool isInactiveItem, int index) {
+  bool onWillAccept(int index, {required bool isInactiveItem}) {
     if (!isInactiveItem) {
       itemTapped(index);
     }
     return !isInactiveItem;
   }
 
-  void onAccept(bool isInactiveItem, DragPayload payload) {
+  void onAccept(DragPayload payload, {required bool isInactiveItem}) {
     if (!isInactiveItem) {
       onKeyDragged(payload);
     }
@@ -53,7 +52,7 @@ class LetterGridView extends StatelessWidget {
       ),
       itemCount: crossAxisCount * mainAxisCount,
       itemBuilder: (context, index) {
-        final x = (index ~/ crossAxisCount);
+        final x = index ~/ crossAxisCount;
         final y = index - (x * crossAxisCount);
 
         final grid = gridMatrix.getValue(x, y);
@@ -61,10 +60,12 @@ class LetterGridView extends StatelessWidget {
         final isInactiveItem = grid.status == GridStatus.inactive;
 
         return DragTarget<DragPayload>(
-          onWillAccept: (_) => onWillAccept(isInactiveItem, index),
-          onAccept: (payload) => onAccept(isInactiveItem, payload),
+          onWillAccept: (_) =>
+              onWillAccept(index, isInactiveItem: isInactiveItem),
+          onAccept: (payload) =>
+              onAccept(payload, isInactiveItem: isInactiveItem),
           builder: (context, _, __) =>
-              buildGridItem(grid, index, isInactiveItem),
+              buildGridItem(grid, index, isInactiveItem: isInactiveItem),
         );
       },
     );
@@ -72,9 +73,9 @@ class LetterGridView extends StatelessWidget {
 
   AnimatedContainer buildGridItem(
     Grid grid,
-    int index,
-    bool isInactiveItem,
-  ) {
+    int index, {
+    required bool isInactiveItem,
+  }) {
     final isSelectedItem = selectedIndex == index;
 
     final border =
@@ -91,7 +92,6 @@ class LetterGridView extends StatelessWidget {
       final payload = DragPayload(
         currentIndex: selectedIndex,
         letter: GridConstants.emptyCharacter,
-        willReplace: false,
       );
       onKeyDragged(payload);
     }

@@ -1,3 +1,3 @@
 class AppConfig {
-  static String appName = "WORD GRID";
+  static String appName = 'WORD GRID';
 }

@@ -1,7 +1,4 @@
 class MatrixPosition {
-  final int x;
-  final int y;
-
   MatrixPosition(this.x, this.y);
 
   factory MatrixPosition.fromIndex({
@@ -12,6 +9,8 @@ class MatrixPosition {
     final y = index - (x * yAxisSize);
     return MatrixPosition(x, y);
   }
+  final int x;
+  final int y;
 
   @override
   String toString() => '(x: $x, y: $y)';

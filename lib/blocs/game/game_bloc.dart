@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game/constants/grid_constants.dart';
-import 'package:game/enums/enums.dart';
 import 'package:game/data/models/drag_payload.dart';
 import 'package:game/data/models/grid.dart';
 import 'package:game/data/models/grid_options.dart';
@@ -11,11 +10,17 @@ import 'package:game/data/models/matrix/matrix.dart';
 import 'package:game/data/models/matrix/matrix_position.dart';
 import 'package:game/data/models/matrix/matrix_size.dart';
 import 'package:game/data/repositories/matrix_repository.dart';
+import 'package:game/enums/enums.dart';
 
 part 'game_event.dart';
 part 'game_state.dart';
 
 class GameBloc extends Bloc<GameEvent, GameState> {
+  GameBloc() : super(GameLoadingState()) {
+    on<GameStartEvent>(_onStartGame);
+    on<GameUpdateSelectedIndexEvent>(_onUpdateSelectedIndex);
+    on<GameKeyPressedEvent>(_onKeyPressedEvent);
+  }
   List<int> _inactiveIndexes = [];
 
   late Matrix<Grid> _gridMatrix;
@@ -25,13 +30,7 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   final matrixRepository = MatrixRepository.instance;
   final _random = Random();
 
-  GameBloc() : super(GameLoadingState()) {
-    on<GameStartEvent>(_onStartGame);
-    on<GameUpdateSelectedIndexEvent>(_onUpdateSelectedIndex);
-    on<GameKeyPressedEvent>(_onKeyPressedEvent);
-  }
-
-  void _onStartGame(
+  Future<void> _onStartGame(
     GameStartEvent event,
     Emitter<GameState> emit,
   ) async {
@@ -45,10 +44,12 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     Emitter<GameState> emit,
   ) {
     _selectedIndex = event.newIndex;
-    emit(GamePlayState(
-      gridMatrix: _gridMatrix,
-      selectedIndex: _selectedIndex,
-    ));
+    emit(
+      GamePlayState(
+        gridMatrix: _gridMatrix,
+        selectedIndex: _selectedIndex,
+      ),
+    );
   }
 
   void _onKeyPressedEvent(
@@ -79,11 +80,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
               grid.status == GridStatus.inactive,
         );
 
-    emit(GamePlayState(
-      gridMatrix: _gridMatrix,
-      selectedIndex: _selectedIndex,
-      isGameOver: isGameOver,
-    ));
+    emit(
+      GamePlayState(
+        gridMatrix: _gridMatrix,
+        selectedIndex: _selectedIndex,
+        isGameOver: isGameOver,
+      ),
+    );
   }
 
   GamePlayState _initGridMatrices({

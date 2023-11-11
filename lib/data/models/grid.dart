@@ -1,10 +1,9 @@
 import 'package:game/enums/enums.dart';
 
 class Grid {
+  Grid(this.letter, this.status);
   final String letter;
   final GridStatus status;
-
-  Grid(this.letter, this.status);
 
   Grid copyWith({
     String? letter,

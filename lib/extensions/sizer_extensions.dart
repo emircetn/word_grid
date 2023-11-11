@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:game/constants/size_constants.dart';
 
 extension SizerExt on num {

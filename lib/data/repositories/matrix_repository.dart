@@ -5,13 +5,12 @@ import 'package:game/data/services/matrix_service.dart';
 import 'package:game/data/services/word_service.dart';
 
 class MatrixRepository {
+  MatrixRepository._init();
   static MatrixRepository? _instance;
   static MatrixRepository get instance {
     _instance ??= MatrixRepository._init();
     return _instance!;
   }
-
-  MatrixRepository._init();
 
   final _matrixService = MatrixService.instance;
   final _wordService = WordService.instance;

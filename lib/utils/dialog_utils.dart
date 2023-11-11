@@ -7,7 +7,7 @@ class DialogUtils {
     required String okActionText,
     required String cancelActionText,
   }) async {
-    return await showCupertinoDialog<bool?>(
+    return showCupertinoDialog<bool?>(
       context: context,
       barrierDismissible: true,
       builder: (context) => CupertinoAlertDialog(

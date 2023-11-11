@@ -10,13 +10,14 @@ class AppRouter {
     router.notFoundHandler =
         Handler(handlerFunc: (_, params) => const SizedBox());
 
-    router.define(
-      PageGame.path,
-      handler: Handler(handlerFunc: (_, params) => const PageGame()),
-    );
-    router.define(
-      PageSettings.path,
-      handler: Handler(handlerFunc: (_, params) => const PageSettings()),
-    );
+    router
+      ..define(
+        PageGame.path,
+        handler: Handler(handlerFunc: (_, params) => const PageGame()),
+      )
+      ..define(
+        PageSettings.path,
+        handler: Handler(handlerFunc: (_, params) => const PageSettings()),
+      );
   }
 }

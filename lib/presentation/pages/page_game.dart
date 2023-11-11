@@ -4,22 +4,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game/blocs/game/game_bloc.dart';
 import 'package:game/configs/app_config.dart';
 import 'package:game/configs/game_config.dart';
-import 'package:game/data/theme/app_colors.dart';
 import 'package:game/constants/grid_constants.dart';
-import 'package:game/extensions/context_extensions.dart';
-import 'package:game/extensions/sizer_extensions.dart';
 import 'package:game/data/models/drag_payload.dart';
 import 'package:game/data/models/grid_options.dart';
-import 'package:game/utils/dialog_utils.dart';
-import 'package:game/utils/router_utils.dart';
+import 'package:game/data/theme/app_colors.dart';
+import 'package:game/extensions/context_extensions.dart';
+import 'package:game/extensions/sizer_extensions.dart';
 import 'package:game/presentation/components/custom_icon_button.dart';
 import 'package:game/presentation/components/letter_drag.dart';
 import 'package:game/presentation/components/letter_grid_view.dart';
 import 'package:game/presentation/pages/page_settings.dart';
+import 'package:game/utils/dialog_utils.dart';
+import 'package:game/utils/router_utils.dart';
 
 class PageGame extends StatefulWidget {
-  static const String path = "/game";
   const PageGame({super.key});
+  static const String path = '/game';
 
   @override
   State<PageGame> createState() => _PageGameState();
@@ -40,15 +40,15 @@ class _PageGameState extends State<PageGame> {
   void settingsTapped() =>
       RouterUtils.navigateTransparent(context, const PageSettings());
 
-  void onListenGameStates(context, state) async {
+  Future<void> onListenGameStates(BuildContext context, GameState state) async {
     if (state is GamePlayState && state.isGameOver) {
       final action = await DialogUtils.showAlertDialog(
         context,
-        titleText: "OYUN BİTTİ",
-        okActionText: "Sıfırla",
-        cancelActionText: "Geri",
+        titleText: 'OYUN BİTTİ',
+        okActionText: 'Sıfırla',
+        cancelActionText: 'Geri',
       );
-      if (action == true) resetTheGame();
+      if (action ?? false) resetTheGame();
     }
   }
 
@@ -93,7 +93,7 @@ class _PageGameState extends State<PageGame> {
         CustomIconButton(
           Icons.settings,
           onPressed: settingsTapped,
-        )
+        ),
       ],
     );
   }

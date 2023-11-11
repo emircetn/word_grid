@@ -3,16 +3,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class Blur extends StatelessWidget {
-  final Widget child;
-  final double sigmaX;
-  final double sigmaY;
-
   const Blur({
-    super.key,
     required this.child,
+    super.key,
     this.sigmaX = 4,
     this.sigmaY = 4,
   });
+  final Widget child;
+  final double sigmaX;
+  final double sigmaY;
 
   @override
   Widget build(BuildContext context) {

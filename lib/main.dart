@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game/blocs/game/game_bloc.dart';
 import 'package:game/configs/app_config.dart';
 import 'package:game/configs/app_router.dart';
 import 'package:game/configs/game_config.dart';
-import 'package:game/data/theme/app_colors.dart';
 import 'package:game/constants/size_constants.dart';
+import 'package:game/data/theme/app_colors.dart';
 import 'package:game/presentation/pages/page_splash.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 //Dil desteği
 //Tema desteği
